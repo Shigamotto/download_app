@@ -3,3 +3,4 @@ dateutils==0.6.12
 paramiko==2.9.2
 flake8==4.0.1
 flake8-import-order==0.18.1
+responses==0.20.0
