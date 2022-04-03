@@ -1,9 +1,10 @@
 from io import BytesIO
 from unittest import TestCase, mock
 
+from provider.http import HTTPDownloadInterface
+
 import responses
 
-from provider.http import HTTPDownloadInterface
 from service import init_service
 
 
