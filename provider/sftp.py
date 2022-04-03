@@ -15,7 +15,7 @@ class sFTPDownloadInterface(BaseDownloadInterface):
 
     def get_filepath(self, location) -> str:
         parsed_url = urlparse(location)
-        return f'{parsed_url.hostname}/{parsed_url.path}'
+        return f'{parsed_url.hostname}{parsed_url.path}'
 
     def download(self, file: BinaryIO, location: str) -> None:
         params = urlparse(location)
