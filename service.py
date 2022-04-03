@@ -64,7 +64,7 @@ class Service:
         os.makedirs(path)
 
         with open(f'{path}/{filename}', 'wb') as file:
-            while _tries < max_retries:
+            while _tries <= max_retries:
                 try:
                     downloaded = interface.download(file, location)
                     return downloaded
@@ -75,7 +75,7 @@ class Service:
                         time.sleep(interface.sleep_timeout)
                         logger.warning('Wake up. Go further...')
                     _tries += 1
-        os.remove(filepath)
+        os.remove(path)
 
     def download(self, locations: List[str], max_retries: int, parallel: bool) -> None:
         """
