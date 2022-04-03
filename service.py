@@ -7,9 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import List
 
 from provider.base import BaseDownloadInterface
-from provider.exceptions import InterfaceNotFound, SameFileException
-
-from utils import generate_filename
+from provider.exceptions import InterfaceNotFound
 
 logger = logging.getLogger(__name__)
 
@@ -61,14 +59,11 @@ class Service:
             :return:
         """
         _tries = 0
-        filename = interface.get_filename(location)
-        if os.path.exists(filename):
-            if interface.is_same_file(location, os.stat(filename)):
-                raise SameFileException('File already exist')
-            else:
-                filename = generate_filename(filename)
+        *filepath, filename = f'storage/{interface.get_filepath(location)}'.split('/')
+        path = os.path.join(*filepath)
+        os.makedirs(path)
 
-        with open(filename, 'wb') as file:
+        with open(f'{path}/{filename}', 'wb') as file:
             while _tries < max_retries:
                 try:
                     downloaded = interface.download(file, location)
@@ -80,7 +75,7 @@ class Service:
                         time.sleep(interface.sleep_timeout)
                         logger.warning('Wake up. Go further...')
                     _tries += 1
-        os.remove(filename)
+        os.remove(filepath)
 
     def download(self, locations: List[str], max_retries: int, parallel: bool) -> None:
         """

@@ -1,4 +1,3 @@
-import os
 from typing import BinaryIO, Tuple
 
 
@@ -17,21 +16,11 @@ class BaseDownloadInterface:
     sleep_on_retry: bool = False
     sleep_timeout: int = 0
 
-    def get_filename(self, location) -> str:
+    def get_filepath(self, location) -> str:
         """
-            Method of getting filename from requested location string
+            Method of getting filepath from requested location string
             :param location: the requested string from which the download request should be made
-            :return: string filename
-        """
-        raise NotImplementedError
-
-    def is_same_file(self, location: str, exists_file_stat: os.stat_result) -> bool:
-        """
-            Method is responsible for the checking of existing file
-            Is it identical with destination file or not
-            :param location: the requested string from which the download request should be made
-            :param exists_file_stat: os.stat_result of existing file
-            :return: bool: True if existing file is the same as destination file
+            :return: string filepath
         """
         raise NotImplementedError
 
